@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mapper.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="taddress">
+
+
+    <sql id="selectAll">
+        select
+        `addId` AS addId,
+        `userid` AS userid,
+        `addinfo` AS addinfo,
+        `recivename` AS recivename,
+        `recivetel` AS recivetel,
+        `state` AS state
+        FROM taddress
+    </sql>
+
+
+    <insert id="insertAddress" keyProperty="addId" useGeneratedKeys="true">
+        INSERT INTO `taddress` ( `userid`,`addinfo`,`recivename`,`recivetel`,`state`)
+        VALUES( #{userid},#{addinfo},#{recivename},#{recivetel},#{state});
+    </insert>
+
+
+    <select id="queryAddressByUserId" resultType="com.sxit.bean.AddressBean">
+        <include refid="selectAll"/>
+        WHERE `userid`=#{userid} AND state =1
+    </select>
+
+    <delete id="delete">
+        DELETE FROM taddress WHERE addId=#{id}
+    </delete>
+
+
+</mapper>

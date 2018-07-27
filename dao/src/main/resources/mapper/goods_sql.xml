@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mapper.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tgoods">
+
+    <resultMap id="rMGoodsBean" type="com.sxit.bean.GoodsBean">
+        <result property="gname" column="gname"/>
+        <result property="state" column="state"/>
+        <result property="price" column="price"/>
+        <result property="pType" column="type"/>
+        <result property="goodsDesc" column="goodsDesc"/>
+    </resultMap>
+
+    <sql id="selectAll">
+        select
+        `goodsid` AS goodsid,
+        `gname` AS gname,
+        `state` AS state,
+        `price` AS price,
+        `type` AS type,
+        `goodsDesc` AS goodsDesc
+        FROM tgoods
+    </sql>
+
+
+    <!--<insert id="insert" keyProperty="id" useGeneratedKeys="true">-->
+        <!--INSERT INTO `tgoods` (`gname`, `state`,`price`,`type`,`goodsDesc`)-->
+        <!--VALUES(#{gname}, #{state},#{price},#{ptype},#{goodsDesc});-->
+    <!--</insert>-->
+
+
+    <select id="queryListByTypeAndDesc" resultType="com.sxit.bean.GoodsBean">
+        <include refid="selectAll"/>
+        WHERE `type`=#{type} AND gname LIKE "%"#{desc}"%" AND state =1
+    </select>
+
+    <select id="queryBeanById" resultType="com.sxit.bean.GoodsBean">
+        <include refid="selectAll"/>
+        WHERE goodsid=#{goodsid} AND state =1
+    </select>
+
+
+</mapper>

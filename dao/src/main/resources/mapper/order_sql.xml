@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mapper.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="torder">
+
+
+    <sql id="selectAll">
+        select
+        `orderId` AS orderId,
+        `orderno` AS orderno,
+        `state` AS state,
+        `userid` AS userid,
+        `time` AS `time`,
+        `allmoney` AS allmoney,
+        `add` AS `add`
+        FROM torder
+    </sql>
+
+
+    <insert id="insertOrder" keyProperty="orderId" useGeneratedKeys="true">
+    INSERT INTO `torder` (`orderno`, `state`,`userid`,`time`,`allmoney`,`add`)
+    VALUES(#{orderno}, #{state},#{userid},#{time},#{allmoney},#{add});
+    </insert>
+
+
+    <select id="queryOrder" resultType="com.sxit.bean.OrderBean">
+        <include refid="selectAll"/>
+        WHERE  state =1 AND userid=#{userid}
+        <if test="orderno!=null">
+            AND `orderno`=#{orderno}
+        </if>
+    </select>
+
+    <select id="queryAllOrder" resultType="com.sxit.bean.OrderBean">
+        <include refid="selectAll"/>
+        WHERE  state =1 AND userid=#{userid}
+    </select>
+
+
+</mapper>

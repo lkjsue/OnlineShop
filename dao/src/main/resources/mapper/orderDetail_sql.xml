@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mapper.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="torderdetail">
+
+
+    <sql id="selectAll">
+        select
+        `detailId` AS detailId,
+        `orderno` AS orderno,
+        `goodsid` AS goodsid,
+        `buycount` AS buycount,
+        `premoney` AS premoney,
+        `orderstate` AS orderstate,
+        `color` AS color,
+        `size` AS `size`
+        FROM torderdetail
+    </sql>
+
+
+    <insert id="insertOrderDetail" keyProperty="orderId" useGeneratedKeys="true">
+        INSERT INTO `torderdetail` ( `orderno`,`goodsid`,`buycount`,`premoney`,`orderstate`,`color`,`size`)
+        VALUES( #{orderno},#{goodsid},#{buycount},#{premoney},#{orderstate},#{color},#{size});
+    </insert>
+
+
+    <select id="queryOrderDetail" resultType="com.sxit.bean.OrderDetailBean">
+        SELECT * from torderdetail WHERE orderno=#{orderno}
+    </select>
+
+    <select id="queryOrderDetailByGoodsId" resultType="com.sxit.bean.OrderDetailBean">
+        SELECT * from torderdetail WHERE goodsid=#{goodsid}
+    </select>
+
+
+</mapper>

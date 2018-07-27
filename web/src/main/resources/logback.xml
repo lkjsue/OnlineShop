@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!--定义一个名为STDOUT的appender，并将其关联到ch.qos.logback.core.ConsoleAppender-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <charset>UTF-8</charset>
+        <!-- encoders 作用是将logger事件转换成字节数组，并将字节数组写入到输出流-->
+        <encoder>
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度
+                            %msg：日志消息，%n是换行符-->
+            <!--<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>-->
+            <pattern>${log.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <!--滚动记录文件-->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--如果是 true，日志被追加到文件结尾，如果是 false，清空现存文件，默认是true-->
+        <append>true</append>
+        <!--日志存放位置-->
+        <file>/home/logs/OnlineShopping/logstash/logstash.log</file>
+        <!--当发生滚动时，决定RollingFileAppender 的行为，涉及文件移动和重命名-->
+        <!--TimeBasedRollingPolicy最常用的滚动策略，它根据时间来制定滚动策略，-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 每天滚动-->
+            <!--必要节点，包含文件名及“%d”转换符-->
+            <fileNamePattern>/home/logs/OnlineShopping/logstash/logstash.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <!-- 限制文件最大保存时间为30天-->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--异步记录日志-->
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 添加附加的appender,最多只能添加一个 -->
+        <appender-ref ref="FILE"/>
+    </appender>
+
+    <!-- root logger，定义级别为info   TRACE < DEBUG < INFO <WARN < ERROR。-->
+    <root level="info">
+        <!--将名为STDOUT的appender添加到root logger下-->
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="ASYNC"/>
+    </root>
+
+</configuration>

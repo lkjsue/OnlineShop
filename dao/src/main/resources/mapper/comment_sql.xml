@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mapper.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tcomment">
+
+
+    <sql id="selectAll">
+        select
+        `comno` AS comno,
+        `detailId` AS detailId,
+        `cplot` AS cplot,
+        `ctime` AS ctime,
+        `ctype` AS ctype
+        FROM tcomment
+    </sql>
+
+
+    <insert id="insertComment" keyProperty="comno" useGeneratedKeys="true">
+        INSERT INTO `tcomment` ( `detailId`,`cplot`,`ctime`,`ctype`)
+        VALUES( #{detailId},#{cplot},#{ctime},#{ctype});
+    </insert>
+
+
+    <select id="queryComment" resultType="com.sxit.bean.CommentBean">
+        <include refid="selectAll"/>
+        WHERE detailId=#{detailId}
+    </select>
+
+    <!--<delete id="delete">-->
+        <!--DELETE FROM taddress WHERE addId=#{id}-->
+    <!--</delete>-->
+
+
+</mapper>

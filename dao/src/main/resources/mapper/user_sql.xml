@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mapper.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tuser">
+
+    <resultMap id="rMUserBean" type="com.sxit.bean.UserBean">
+        <result property="userPhone" column="userPhone"/>
+        <result property="password" column="password"/>
+        <result property="money" column="money"/>
+    </resultMap>
+
+    <sql id="selectAll">
+        select
+        `userid` AS userid,
+        `password` AS password,
+        `userPhone` AS userPhone,
+        `money` AS money
+        FROM tuser
+    </sql>
+
+
+    <insert id="insert" keyProperty="userid" useGeneratedKeys="true">
+        INSERT INTO `tuser` ( `password`, `userPhone`, `money`)
+        VALUES(#{password}, #{userPhone},#{money});
+    </insert>
+
+
+    <!--<update id="updateUser">-->
+        <!--UPDATE `cms_user`-->
+        <!--<set>-->
+            <!--<if test="password!=null and password!=''">-->
+                <!--`password`=#{password},-->
+            <!--</if>-->
+
+            <!--<if test="phone!=null and phone!=''">-->
+                <!--`phone`=#{phone},-->
+            <!--</if>-->
+            <!--<if test="state!=null">-->
+                <!--`state`=#{state},-->
+            <!--</if>-->
+            <!--<if test="name!=null and name!=''">-->
+                <!--`name`=#{name},-->
+            <!--</if>-->
+            <!--<if test="email!=null and email!=''">-->
+                <!--`email`=#{email},-->
+            <!--</if>-->
+
+            <!--<if test="roleId!=null">-->
+                <!--`role_id`=#{roleId},-->
+            <!--</if>-->
+            <!--`update_time`=now(),-->
+            <!--`operator`=#{operator}-->
+        <!--</set>-->
+        <!--WHERE `id`=#{id}-->
+    <!--</update>-->
+
+    <select id="queryUserBean" resultType="com.sxit.bean.UserBean">
+        <include refid="selectAll"/>
+        WHERE userPhone=#{userPhone} AND password=#{password}
+    </select>
+
+    <!--<select id="selectByAccount" resultType="com.hujiang.by.cms.bean.UserBean">-->
+        <!--<include refid="selectAll"/>-->
+        <!--WHERE account=#{account}-->
+    <!--</select>-->
+
+    <!--<select id="selectUserList" resultType="com.hujiang.by.cms.bean.UserBean">-->
+
+        <!--select-->
+        <!--`account` AS account,-->
+        <!--`create_time` AS createTime,-->
+        <!--`phone` AS phone,-->
+        <!--`state` AS state,-->
+        <!--`name` AS name,-->
+        <!--`email` AS email,-->
+        <!--`id` AS id,-->
+        <!--`role_id` AS roleId,-->
+        <!--`update_time` AS updateTime,-->
+        <!--`operator` AS operator-->
+        <!--FROM cms_user-->
+        <!--<where>-->
+            <!--<if test="null!=account">-->
+                <!--account LIKE #{account}-->
+            <!--</if>-->
+            <!--<if test="null!=name">-->
+                <!--AND `name` LIKE #{name}-->
+            <!--</if>-->
+            <!--<if test="state!=null">-->
+                <!--AND state=#{state}-->
+            <!--</if>-->
+        <!--</where>-->
+        <!--ORDER BY update_time DESC-->
+        <!--limit #{start}, #{end}-->
+    <!--</select>-->
+
+    <!--<select id="selectUserById" resultType="com.hujiang.by.cms.bean.UserBean">-->
+        <!--<include refid="selectAll"/>-->
+        <!--WHERE id=#{id}-->
+    <!--</select>-->
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mapper.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tgoodspic">
+
+    <sql id="selectAll">
+        select
+        `goodsid` AS goodsid,
+        `picno` AS picno,
+        `picType` AS picType,
+        `picname` AS picname
+        FROM tgoodspic
+    </sql>
+
+    <select id="queryPicById" resultType="com.sxit.bean.GoodsPicBean">
+        <include refid="selectAll"/>
+        WHERE `picType`=#{picType} AND goodsid=#{goodsid}
+    </select>
+
+
+</mapper>
